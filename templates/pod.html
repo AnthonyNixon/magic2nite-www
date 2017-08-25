@@ -1,3 +1,24 @@
 <div ng-controller="podCtrl">
-    {{pod}}
+    <h1>{{pod.short_code}}</h1>
+    Some <b>{{pod.format}}</b> Magic will be happening at <b>{{pod.start_time}}</b> in <b>{{pod.location}}</b> if we can get <b>{{pod.min_players}} - {{pod.max_players}}</b> players committed before <b>{{pod.cutoff_time}}</b>
+    <br/>
+    <form name="signupForm">
+        <label>
+            Name:
+            <input type="text" name="name" ng-model="player.name" required>
+        </label>
+        <div role="alert">
+            <span class="error" ng-show="myForm.userName.$error.required">Required!</span>
+        </div>
+        <label>
+            Email:
+            <input type="text" name="email" ng-model="player.email">
+        </label>
+        <input type="submit" ng-click="addPlayer()">
+    </form>
+    <br/>
+    <h2>Current Players:</h2>
+    <ul>
+        <li ng-repeat="player in players">{{player.name}} ({{player.email}})</li>
+    </ul>
 </div>

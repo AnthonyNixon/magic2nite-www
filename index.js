@@ -18,8 +18,19 @@ angular.module("Magic2Nite", ['ngRoute'])
         $scope.backendHost = "http://localhost:3000";
         $scope.podCode = $routeParams.shortCode;
         $scope.pod = {};
+        $scope.players = [];
+        $scope.player = {};
+
+        $scope.addPlayer = function () {
+          $http.post($scope.backendHost + "/pod/" + $scope.podCode + "/player", {"name": $scope.player.name, "email": $scope.player.email})
+        };
 
         $http.get($scope.backendHost + "/pod/" + $scope.podCode).then(function (response) {
             $scope.pod = response.data;
+            $http.get($scope.backendHost + "/pod/" + $scope.podCode + "/players").then(function (response) {
+                $scope.players = response.data.result;
+            })
+        }).catch(function(){
+            $location.path('/');
         });
     });

@@ -22,7 +22,11 @@ angular.module("Magic2Nite", ['ngRoute'])
         $scope.player = {};
 
         $scope.addPlayer = function () {
-          $http.post($scope.backendHost + "/pod/" + $scope.podCode + "/player", {"name": $scope.player.name, "email": $scope.player.email})
+          $http.post($scope.backendHost + "/pod/" + $scope.podCode + "/player", {"name": $scope.player.name, "email": $scope.player.email}).then(function() {
+              $http.get($scope.backendHost + "/pod/" + $scope.podCode + "/players").then(function (response) {
+                  $scope.players = response.data.result;
+              })
+          })
         };
 
         $http.get($scope.backendHost + "/pod/" + $scope.podCode).then(function (response) {

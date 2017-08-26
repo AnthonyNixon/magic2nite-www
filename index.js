@@ -14,12 +14,12 @@ angular.module("Magic2Nite", ['ngRoute'])
         $scope.path = $location.path();
     })
 
-    .controller("createPodCtrl", function($scope, $http) {
+    .controller("createPodCtrl", function($scope, $http, $location) {
         $scope.backendHost = "http://magic2nite.com:3000";
 
         $scope.makePod = function () {
             $http.post($scope.backendHost + "/pod", $scope.podData).then(function(response) {
-                console.log(response)
+                $location.path('/' + response.data.short_code);
             })
         };
 

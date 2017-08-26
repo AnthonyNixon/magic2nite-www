@@ -15,7 +15,7 @@ angular.module("Magic2Nite", ['ngRoute'])
     })
 
     .controller("podCtrl", function($scope, $http, $location, $routeParams) {
-        $scope.backendHost = "http://localhost:3000";
+        $scope.backendHost = "http://magic2nite.com:3000";
         $scope.podCode = $routeParams.shortCode;
         $scope.pod = {};
         $scope.players = [];

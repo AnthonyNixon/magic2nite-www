@@ -1,1 +1,36 @@
-HOME
+<div ng-controller="createPodCtrl">
+    <h1>Magic 2Nite</h1>
+    <br/>
+    <form name="newPodForm">
+        <label>
+            Format:
+            <input type="text" name="format" ng-model="podData.format">
+        </label>
+        <label>
+            Location:
+            <input type="text" name="location" ng-model="podData.location">
+        </label>
+        <label>
+            Minimum Players:
+            <input type="number" name="min_players" ng-model="podData.min_players">
+        </label>
+        <label>
+            Maximum Players:
+            <input type="number" name="max_players" ng-model="podData.max_players">
+        </label>
+        <label>
+            Start Time:
+            <input type="datetime-local" name="start_time" ng-model="podData.start_time">
+        </label>
+        <label>
+            Cutoff Time:
+            <input type="datetime-local" name="cutoff_time" ng-model="podData.cutoff_time">
+        </label>
+        <input type="submit" ng-click="makePod()">
+    </form>
+    <br/>
+    <h2>Current Players:</h2>
+    <ul>
+        <li ng-repeat="player in players">{{player.name}} ({{player.email}})</li>
+    </ul>
+</div>

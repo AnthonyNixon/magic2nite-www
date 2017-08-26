@@ -14,6 +14,17 @@ angular.module("Magic2Nite", ['ngRoute'])
         $scope.path = $location.path();
     })
 
+    .controller("createPodCtrl", function($scope, $http, $location) {
+        $scope.backendHost = "http://magic2nite.com:3000";
+
+        $scope.makePod = function () {
+            $http.post($scope.backendHost + "/pod", $scope.podData).then(function(response) {
+                $location.path('/' + response.data.short_code);
+            })
+        };
+
+    })
+
     .controller("podCtrl", function($scope, $http, $location, $routeParams) {
         $scope.backendHost = "http://magic2nite.com:3000";
         $scope.podCode = $routeParams.shortCode;
@@ -37,4 +48,6 @@ angular.module("Magic2Nite", ['ngRoute'])
         }).catch(function(){
             $location.path('/');
         });
+
+
     });

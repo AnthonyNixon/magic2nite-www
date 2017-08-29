@@ -42,12 +42,24 @@ angular.module("Magic2Nite", ['ngRoute'])
 
         $http.get($scope.backendHost + "/pod/" + $scope.podCode).then(function (response) {
             $scope.pod = response.data;
+            console.log($scope.pod);
+
+            var offset = new Date().getTimezoneOffset();
+
+            $scope.pod.start_time = new Date($scope.pod.start_time);
+            $scope.pod.start_time = new Date($scope.pod.start_time.getTime() - offset * 60000);
+
+            $scope.pod.cutoff_time = new Date($scope.pod.cutoff_time);
+            $scope.pod.cutoff_time = new Date($scope.pod.cutoff_time.getTime() - offset * 60000);
+
             $http.get($scope.backendHost + "/pod/" + $scope.podCode + "/players").then(function (response) {
                 $scope.players = response.data.result;
             })
-        }).catch(function(){
-            $location.path('/');
         });
+        // }).catch(function(){
+        //     console.log("Caught error, going back to home...");
+        //     $location.path('/');
+        // });
 
 
     });

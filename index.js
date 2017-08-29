@@ -37,20 +37,33 @@ angular.module("Magic2Nite", ['ngRoute', 'ngAnimate', 'ngMaterial'])
 
     })
 
-    .controller("podCtrl", function($scope, $http, $location, $routeParams, $sce) {
+    .controller("podCtrl", function($scope, $http, $location, $routeParams, $sce, $interval) {
         $scope.backendHost = "http://magic2nite.com:3000";
         $scope.podCode = $routeParams.shortCode;
         $scope.pod = {};
         $scope.players = [];
         $scope.player = {};
+        $scope.playerTiles = [];
 
         $scope.addPlayer = function () {
-          $http.post($scope.backendHost + "/pod/" + $scope.podCode + "/player", {"name": $scope.player.name, "email": $scope.player.email}).then(function() {
-              $http.get($scope.backendHost + "/pod/" + $scope.podCode + "/players").then(function (response) {
-                  $scope.players = response.data.result;
-              })
-          })
+          $http.post($scope.backendHost + "/pod/" + $scope.podCode + "/player", {"name": $scope.player.name, "email": $scope.player.email}).then(function() {})
         };
+
+        function parsePlayers() {
+            if ($scope.playerTiles.length != $scope.players.length) {
+                $scope.playerTiles = [];
+                $scope.players.forEach(function (player) {
+                    console.log(player);
+                    var gridTile = {
+                        icon: "avatar:avatar.svg",
+                        title: player.name,
+                        background: "red"
+                    };
+                    console.log(gridTile);
+                    $scope.playerTiles.push(gridTile);
+                });
+            }
+        }
 
         $http.get($scope.backendHost + "/pod/" + $scope.podCode).then(function (response) {
             $scope.pod = response.data;
@@ -70,21 +83,18 @@ angular.module("Magic2Nite", ['ngRoute', 'ngAnimate', 'ngMaterial'])
 
             $http.get($scope.backendHost + "/pod/" + $scope.podCode + "/players").then(function (response) {
                 $scope.players = response.data.result;
-                console.log($scope.players);
-                $scope.playerTiles = [];
-                $scope.players.forEach(function (player) {
-                    console.log(player);
-                    var gridTile = {
-                        icon: "avatar:avatar.svg",
-                        title: player.name,
-                        background: "red"
-                    };
-                    console.log(gridTile);
-                    $scope.playerTiles.push(gridTile);
-                });
-                console.log($scope.playerTiles);
+                parsePlayers();
             })
         });
+
+        $scope.updatePlayers = function () {
+            $http.get($scope.backendHost + "/pod/" + $scope.podCode + "/players").then(function (response) {
+                $scope.players = response.data.result;
+                parsePlayers();
+            })
+        };
+
+        $interval($scope.updatePlayers, 2000);
         // }).catch(function(){
         //     console.log("Caught error, going back to home...");
         //     $location.path('/');

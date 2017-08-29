@@ -1,5 +1,10 @@
-angular.module("Magic2Nite", ['ngRoute'])
-    .config(function($routeProvider, $locationProvider) {
+angular.module("Magic2Nite", ['ngRoute', 'ngAnimate', 'ngMaterial'])
+    .config(function($routeProvider, $locationProvider, $mdThemingProvider) {
+
+        $mdThemingProvider.theme('default')
+            .primaryPalette('indigo')
+            .accentPalette('red');
+
         $routeProvider
             .when('/', {
                 templateUrl: 'templates/home.html'

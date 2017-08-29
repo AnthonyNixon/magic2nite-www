@@ -37,7 +37,7 @@ angular.module("Magic2Nite", ['ngRoute', 'ngAnimate', 'ngMaterial'])
 
     })
 
-    .controller("podCtrl", function($scope, $http, $location, $routeParams) {
+    .controller("podCtrl", function($scope, $http, $location, $routeParams, $sce) {
         $scope.backendHost = "http://magic2nite.com:3000";
         $scope.podCode = $routeParams.shortCode;
         $scope.pod = {};
@@ -56,6 +56,10 @@ angular.module("Magic2Nite", ['ngRoute', 'ngAnimate', 'ngMaterial'])
             $scope.pod = response.data;
             console.log($scope.pod);
 
+            $scope.trustSrc = function(src) {
+                return $sce.trustAsResourceUrl(src);
+            };
+
             var offset = new Date().getTimezoneOffset();
 
             $scope.pod.start_time = new Date($scope.pod.start_time);
@@ -66,6 +70,19 @@ angular.module("Magic2Nite", ['ngRoute', 'ngAnimate', 'ngMaterial'])
 
             $http.get($scope.backendHost + "/pod/" + $scope.podCode + "/players").then(function (response) {
                 $scope.players = response.data.result;
+                console.log($scope.players);
+                $scope.playerTiles = [];
+                $scope.players.forEach(function (player) {
+                    console.log(player);
+                    var gridTile = {
+                        icon: "avatar:avatar.svg",
+                        title: player.name,
+                        background: "red"
+                    };
+                    console.log(gridTile);
+                    $scope.playerTiles.push(gridTile);
+                });
+                console.log($scope.playerTiles);
             })
         });
         // }).catch(function(){

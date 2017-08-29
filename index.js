@@ -21,6 +21,13 @@ angular.module("Magic2Nite", ['ngRoute', 'ngAnimate', 'ngMaterial'])
 
     .controller("createPodCtrl", function($scope, $http, $location) {
         $scope.backendHost = "http://magic2nite.com:3000";
+        $scope.podData = {};
+
+        $scope.podData.start_time = new Date();
+        $scope.podData.start_time.setHours(0,0,0,0);
+
+        $scope.podData.cutoff_time = new Date();
+        $scope.podData.cutoff_time.setHours(0,0,0,0);
 
         $scope.makePod = function () {
             $http.post($scope.backendHost + "/pod", $scope.podData).then(function(response) {

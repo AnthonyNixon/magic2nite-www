@@ -4,19 +4,19 @@
             <form name="newPodForm">
 
                 <div layout-gt-xs="row">
-                    <md-input-container class="md-block" flex-gt-xs>
+                    <md-input-container class="md-block" flex="20">
                         <label>Format</label>
                         <input ng-model="podData.format">
                     </md-input-container>
 
-                    <md-input-container class="md-block" flex-gt-xs>
-                        <label>Minimum Players</label>
-                        <input ng-model="podData.max_players" type="number">
-                    </md-input-container>
-
-                    <md-input-container class="md-block" flex-gt-xs>
+                    <md-input-container class="md-block" flex="20">
                         <label>Minimum Players</label>
                         <input ng-model="podData.min_players" type="number">
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex="20">
+                        <label>Maximum Players</label>
+                        <input ng-model="podData.max_players" type="number">
                     </md-input-container>
                 </div>
 

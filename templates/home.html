@@ -1,31 +1,46 @@
 <div ng-controller="createPodCtrl">
-    <h1>Magic 2Nite</h1>
-    <br/>
-    <form name="newPodForm">
-        <label>
-            Format:
-            <input type="text" name="format" ng-model="podData.format">
-        </label>
-        <label>
-            Location:
-            <input type="text" name="location" ng-model="podData.location">
-        </label>
-        <label>
-            Minimum Players:
-            <input type="number" name="min_players" ng-model="podData.min_players">
-        </label>
-        <label>
-            Maximum Players:
-            <input type="number" name="max_players" ng-model="podData.max_players">
-        </label>
-        <label>
-            Start Time:
-            <input type="datetime-local" name="start_time" ng-model="podData.start_time">
-        </label>
-        <label>
-            Cutoff Time:
-            <input type="datetime-local" name="cutoff_time" ng-model="podData.cutoff_time">
-        </label>
-        <input type="submit" ng-click="makePod()">
-    </form>
+    <md-content layout-padding>
+        <div>
+            <form name="newPodForm">
+
+                <div layout-gt-xs="row">
+                    <md-input-container class="md-block" flex="20">
+                        <label>Format</label>
+                        <input ng-model="podData.format">
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex="20">
+                        <label>Minimum Players</label>
+                        <input ng-model="podData.min_players" type="number">
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex="20">
+                        <label>Maximum Players</label>
+                        <input ng-model="podData.max_players" type="number">
+                    </md-input-container>
+                </div>
+
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                    <label>Location</label>
+                    <input ng-model="podData.location">
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Start Time</label>
+                        <input ng-model="podData.start_time" type="datetime-local">
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Cutoff Time</label>
+                        <input ng-model="podData.cutoff_time" type="datetime-local">
+                    </md-input-container>
+                </div>
+                <div>
+                    <md-button type="submit" ng-click="makePod()" class="md-primary md-raised">Submit</md-button>
+                </div>
+
+            </form>
+        </div>
+    </md-content>
 </div>

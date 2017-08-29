@@ -1,5 +1,10 @@
-angular.module("Magic2Nite", ['ngRoute'])
-    .config(function($routeProvider, $locationProvider) {
+angular.module("Magic2Nite", ['ngRoute', 'ngAnimate', 'ngMaterial'])
+    .config(function($routeProvider, $locationProvider, $mdThemingProvider) {
+
+        $mdThemingProvider.theme('default')
+            .primaryPalette('indigo')
+            .accentPalette('red');
+
         $routeProvider
             .when('/', {
                 templateUrl: 'templates/home.html'
@@ -16,6 +21,13 @@ angular.module("Magic2Nite", ['ngRoute'])
 
     .controller("createPodCtrl", function($scope, $http, $location) {
         $scope.backendHost = "http://magic2nite.com:3000";
+        $scope.podData = {};
+
+        $scope.podData.start_time = new Date();
+        $scope.podData.start_time.setHours(0,0,0,0);
+
+        $scope.podData.cutoff_time = new Date();
+        $scope.podData.cutoff_time.setHours(0,0,0,0);
 
         $scope.makePod = function () {
             $http.post($scope.backendHost + "/pod", $scope.podData).then(function(response) {
@@ -25,7 +37,7 @@ angular.module("Magic2Nite", ['ngRoute'])
 
     })
 
-    .controller("podCtrl", function($scope, $http, $location, $routeParams) {
+    .controller("podCtrl", function($scope, $http, $location, $routeParams, $sce) {
         $scope.backendHost = "http://magic2nite.com:3000";
         $scope.podCode = $routeParams.shortCode;
         $scope.pod = {};
@@ -44,6 +56,10 @@ angular.module("Magic2Nite", ['ngRoute'])
             $scope.pod = response.data;
             console.log($scope.pod);
 
+            $scope.trustSrc = function(src) {
+                return $sce.trustAsResourceUrl(src);
+            };
+
             var offset = new Date().getTimezoneOffset();
 
             $scope.pod.start_time = new Date($scope.pod.start_time);
@@ -54,6 +70,19 @@ angular.module("Magic2Nite", ['ngRoute'])
 
             $http.get($scope.backendHost + "/pod/" + $scope.podCode + "/players").then(function (response) {
                 $scope.players = response.data.result;
+                console.log($scope.players);
+                $scope.playerTiles = [];
+                $scope.players.forEach(function (player) {
+                    console.log(player);
+                    var gridTile = {
+                        icon: "avatar:avatar.svg",
+                        title: player.name,
+                        background: "red"
+                    };
+                    console.log(gridTile);
+                    $scope.playerTiles.push(gridTile);
+                });
+                console.log($scope.playerTiles);
             })
         });
         // }).catch(function(){

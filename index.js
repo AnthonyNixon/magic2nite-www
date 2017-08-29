@@ -85,6 +85,9 @@ angular.module("Magic2Nite", ['ngRoute', 'ngAnimate', 'ngMaterial'])
                 $scope.players = response.data.result;
                 parsePlayers();
             })
+        }).catch(function(){
+            console.log("Caught error, going back to home...");
+            $location.path('/');
         });
 
         $scope.updatePlayers = function () {
@@ -95,10 +98,6 @@ angular.module("Magic2Nite", ['ngRoute', 'ngAnimate', 'ngMaterial'])
         };
 
         $interval($scope.updatePlayers, 2000);
-        // }).catch(function(){
-        //     console.log("Caught error, going back to home...");
-        //     $location.path('/');
-        // });
 
 
     });

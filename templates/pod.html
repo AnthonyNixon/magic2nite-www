@@ -2,20 +2,26 @@
     <h1>Pod {{pod.short_code}}</h1>
     Some <b>{{pod.format}}</b> Magic will be happening at <b>{{pod.start_time}}</b> in <b>{{pod.location}}</b> if we can get <b>{{pod.min_players}} - {{pod.max_players}}</b> players committed before <b>{{pod.cutoff_time}}</b>
     <br/>
-    <form name="signupForm">
-        <label>
-            Name:
-            <input type="text" name="name" ng-model="player.name" required>
-        </label>
-        <div role="alert">
-            <span class="error" ng-show="myForm.userName.$error.required">Required!</span>
+    <md-content layout-padding>
+        <div>
+            <form name="signupForm">
+                <div layout-gt-xs="row">
+                    <md-input-container class="md-block" flex="40">
+                        <label>Name</label>
+                        <input ng-model="player.name">
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex="60">
+                        <label>Email Address</label>
+                        <input ng-model="player.email">
+                    </md-input-container>
+                </div>
+                <div>
+                    <md-button type="submit" ng-click="addPlayer()" class="md-primary md-raised">I'm In!</md-button>
+                </div>
+            </form>
         </div>
-        <label>
-            Email:
-            <input type="text" name="email" ng-model="player.email">
-        </label>
-        <input type="submit" ng-click="addPlayer()">
-    </form>
+    </md-content>
     <br/>
     <h2>Current Players:</h2>
     <div class="gridListdemoDynamicTiles">
